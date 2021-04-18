@@ -1,7 +1,7 @@
 from math import sqrt
 
 
-def dichotomy(func, a, b, eps,counter =0,  msg=False):
+def dichotomy(func, a, b, eps, counter=0,  msg=False):
     while b - a > eps:
         mean = (a + b) / 2
         delta = 0.001 * (b - a)
@@ -28,7 +28,6 @@ def goldenSection(func, a, b, eps):
     x1 = b - (b - a) / phi
     x2 = a + (b - a) / phi
     f_x1, f_x2 = func(x1), func(x2)
-    # print(f_x1,f_x2)
     tau = (sqrt(5) - 1) / 2
     tau = 1/phi
     eps_n = (b - a) / 2
@@ -50,7 +49,7 @@ def goldenSection(func, a, b, eps):
     return x_min
 
 
-def fibonacciSequence(n):  # TODO переписать через генератор
+def fibonacciSequence(n):
     if n == 1 or n == 2:
         return 1
     step_1 = 1
@@ -59,11 +58,18 @@ def fibonacciSequence(n):  # TODO переписать через генерат
         tmp = step_2
         step_2 = step_1
         step_1 = tmp + step_2
-        # print(step_1)
     return step_1
 
 
-def fibonacci(func, a, b, n, k, lambd, mu, prev_f, eps):
+def fibonacci(func, a , b, eps):
+    N = (b - a)/eps
+    n = 0
+    while fibonacciSequence(n) < N:
+        n = n + 1
+    return _fibonacci(func, a, b, n, 0, eps)
+
+
+def _fibonacci(func, a, b, n, k,  eps, lambd=float('inf'), mu=float('inf'), prev_f=float('inf')):
     if k <= n - 2:
         if lambd == float('inf'):
             lambd = a + fibonacciSequence(n - k - 1) / fibonacciSequence(n - k + 1) * (b - a)
@@ -85,12 +91,12 @@ def fibonacci(func, a, b, n, k, lambd, mu, prev_f, eps):
     if f1 > f2:
         prev_f = f2
         if k < n - 2:
-            return fibonacci(func, lambd, b, n, k + 1, mu, float('inf'), prev_f,  eps)
+            return _fibonacci(func, lambd, b, n, k + 1, mu, float('inf'), prev_f,  eps)
         else:
-            return fibonacci(func, lambd, b, n, k + 1, mu, lambd, prev_f, eps,)
+            return _fibonacci(func, lambd, b, n, k + 1, mu, lambd, prev_f, eps,)
     else:
         prev_f = f1
         if k < n - 2:
-            return fibonacci(func, a, mu, n, k + 1, float('inf'), lambd, prev_f, eps)
+            return _fibonacci(func, a, mu, n, k + 1, float('inf'), lambd, prev_f, eps)
         else:
-            return fibonacci(func, lambd, b, n, k + 1, mu, lambd, prev_f, eps)
+            return _fibonacci(func, lambd, b, n, k + 1, mu, lambd, prev_f, eps)
