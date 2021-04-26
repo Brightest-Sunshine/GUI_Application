@@ -5,6 +5,7 @@ import logging
 
 
 def main():
+    logging.basicConfig(level=logging.INFO)
     app = QtWidgets.QApplication(sys.argv)  # Новый экземпляр QApplication
     window = MainApp()  # Создаём объект класса ExampleApp
     window.show()  # Показываем окно

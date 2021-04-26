@@ -38,7 +38,6 @@ class MainApp(QtWidgets.QMainWindow, UI_main_window.Ui_Main, QtWidgets.QMenuBar)
         aboutAct.setShortcut('F1')
         aboutAct.setStatusTip('About application')
         aboutAct.triggered.connect(self.run_about)
-        # aboutAct =
         aboutMenu = self.menubar
         aboutMenu.addAction(aboutAct)
 
@@ -96,11 +95,10 @@ class MainApp(QtWidgets.QMainWindow, UI_main_window.Ui_Main, QtWidgets.QMenuBar)
         expr = self.equation.qt_obj.toPlainText()  # get eq from app
         try:
             x, working_function = self.get_var_and_func(expr)
+            eps = self.set_eps()
         except Exception:
             return 1
-        else:
-            pass
-        eps = self.set_eps()
+
         left_border, right_border = self.set_borders()
         text_answer, num_answer = self.run_param(working_function, left_border, right_border, eps)
         self.print_result(text_answer)
@@ -110,51 +108,70 @@ class MainApp(QtWidgets.QMainWindow, UI_main_window.Ui_Main, QtWidgets.QMenuBar)
         if self.eps.qt_obj.toPlainText() == "":
             return EPS_DEFAULT
         else:
-            return float(self.eps.qt_obj.toPlainText())
+            try:
+                return float(self.eps.qt_obj.toPlainText())
+            except Exception:
+                self.ERROR_handler(ERRORS.err_to_float)
+                raise Exception
 
     def set_borders(self):  # TODO ERROR
-        # TODO ERROR на приведение типов
-        # TODO ERROR на разность границ.
         if self.left_border.qt_obj.toPlainText() == "":
             left = LEFT_BORDER_DEFAULT
         else:
-            left = float(self.left_border.qt_obj.toPlainText())
+            try:
+                left = float(self.left_border.qt_obj.toPlainText())
+            except Exception:
+                self.ERROR_handler(ERRORS.err_to_float)
+                raise Exception
 
         if self.right_border.qt_obj.toPlainText() == "":
             right = left + 1
         else:
-            right = float(self.right_border.qt_obj.toPlainText())
+            try:
+                right = float(self.right_border.qt_obj.toPlainText())
+            except Exception:
+                self.ERROR_handler(ERRORS.err_to_float)
+                raise Exception
+
+        if left > right:
+            self.ERROR_handler(ERRORS.err_borders)
+            raise Exception
         return left, right
 
     def run_param(self, working_function, left_border, right_border, eps):
         text_answer = []
         num_answer = []
         if self.DICHOTOMY.qt_obj.isChecked():
-            _, answer, _ = optimization_src.dichotomy(working_function, left_border, right_border, eps)
-            print("dich", answer)
+            answer = optimization_src.dichotomy(working_function, left_border, right_border, eps)
+            logging.info("dich result " + str(answer))
             text_answer.append(TextCreator.method_result_to_text(self.DICHOTOMY, answer, working_function))
             num_answer.append([answer, self.DICHOTOMY])
 
         if self.GOLDEN.qt_obj.isChecked():
             answer = optimization_src.goldenSection(working_function, left_border, right_border, eps)
-            print("gold ", answer)
+            logging.info("gold result " + str(answer))
             text_answer.append(TextCreator.method_result_to_text(self.GOLDEN, answer, working_function))
             num_answer.append([answer, self.GOLDEN])
         if self.FIBONACCI.qt_obj.isChecked():
-            _, answer, _ = optimization_src.dichotomy(working_function, left_border, right_border, eps)
-            print("fib", answer)
+            answer = optimization_src.dichotomy(working_function, left_border, right_border, eps)
+            logging.info("fib result " + str(answer))
             text_answer.append(TextCreator.method_result_to_text(self.FIBONACCI, answer, working_function))
             num_answer.append([answer, self.FIBONACCI])
 
         if self.PLOT.qt_obj.isChecked():
-            self.function_plot(working_function, left_border, right_border, num_answer)
+            try:
+                self.function_plot(working_function, left_border, right_border, num_answer)
+                logging.info("plot created")
+            except Exception:
+                self.ERROR_handler(ERRORS.err_plot)
+                self.plot_picture.qt_obj.hide()
         return text_answer, num_answer
 
     def get_var_and_func(self, expr):
         if expr == "":
             self.ERROR_handler(ERRORS.err_null)
             raise Exception
-        print("expression", expr)
+        logging.info("expression "+str(expr))
         try:
             working_expr = sympify(expr)
         except SympifyError:
@@ -165,7 +182,7 @@ class MainApp(QtWidgets.QMainWindow, UI_main_window.Ui_Main, QtWidgets.QMenuBar)
             self.ERROR_handler(ERRORS.err_var)
             raise Exception
         x = variables.pop()
-        print("var", x)
+        logging.info("var "+ str(x))
         working_function = lambda x_value: working_expr.subs(x, x_value)  # create standard function
         return x, working_function
 
@@ -205,7 +222,7 @@ class MainApp(QtWidgets.QMainWindow, UI_main_window.Ui_Main, QtWidgets.QMenuBar)
 
     def ERROR_handler(self, error):
         LOG, msg = error
-        #print(LOG)
+        # print(LOG)
         logging.error(LOG)
         self.textBrowser_5.clear()
         self.textBrowser_5.setText(msg)

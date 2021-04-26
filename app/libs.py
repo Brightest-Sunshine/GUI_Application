@@ -1,6 +1,6 @@
 from collections import namedtuple
 
-ERROR = namedtuple("Error", ['cause', 'info_to_user'])
+ERROR = namedtuple("ERROR", ['cause', 'info_to_user'])
 
 
 class TextCreator:
@@ -18,3 +18,6 @@ class ERRORS:
     err_var = ERROR('NOT_ONE_VARIABLE', 'Please, write one-dimensional function')
     err_null = ERROR('NO_EXPR', 'Please, write your function')
     err_sympy = ERROR('ERROR RUNNING SYMPY', 'Error during function recognition, please follow our example')
+    err_to_float = ERROR('ERROR CONVERTING TO FLOAT', 'Please, write float number or scientific notation')
+    err_borders = ERROR('ERROR left border bigger than right', 'Please, choose left border lesser than right')
+    err_plot = ERROR('ERROR problems during plot creating', 'Unknown error during plot  creation')
