@@ -1,6 +1,7 @@
 from PyQt5 import uic, QtWidgets, QtGui
 import sys
 from main_window import MainApp
+import logging
 
 
 def main():

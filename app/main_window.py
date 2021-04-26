@@ -7,6 +7,7 @@ from app import optimization_src
 import matplotlib.pyplot as plt
 import numpy as np
 from collections import namedtuple
+import logging
 from app.about import AboutView
 
 checkBox_Parameter = namedtuple('checkBox_Parameter', ['name', 'qt_name', 'qt_obj'])
@@ -204,7 +205,8 @@ class MainApp(QtWidgets.QMainWindow, UI_main_window.Ui_Main, QtWidgets.QMenuBar)
 
     def ERROR_handler(self, error):
         LOG, msg = error
-        print(LOG)
+        #print(LOG)
+        logging.error(LOG)
         self.textBrowser_5.clear()
         self.textBrowser_5.setText(msg)
         self.textBrowser_5.show()

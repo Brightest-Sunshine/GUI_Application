@@ -1,5 +1,7 @@
 from collections import namedtuple
+
 ERROR = namedtuple("Error", ['cause', 'info_to_user'])
+
 
 class TextCreator:
     @staticmethod
