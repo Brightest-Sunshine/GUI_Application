@@ -24,7 +24,7 @@ class Libs_test(unittest.TestCase):
 
 class Main_Window_test(unittest.TestCase):
     def setUp(self):
-        self.app = QtWidgets.QApplication(['-platform', 'minimal'])
+        self.app = QtWidgets.QApplication(['--platform offscreen'])
         self.form = MainApp()
 
     def test_default(self):
