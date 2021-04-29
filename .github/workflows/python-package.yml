@@ -23,9 +23,10 @@ jobs:
     - name: Install dependencies
       run: |
         export QT_DEBUG_PLUGINS=1
-        export QT_QPA_PLATFORM="offscreen"
         python -m pip install --upgrade pip
         pip install -r requirements.txt
+        sudo apt-get install xvfb
+        sudo apt-get install libxkbcommon-x11-0
         python -m pip install mypy
     - name: Lint with flake8
       run: |
@@ -35,7 +36,7 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
       run: |
-        pytest
+        xvfb-run `which test_public.py` run -m pytest
     - name: Mypy checks
       run: |
         mypy app
