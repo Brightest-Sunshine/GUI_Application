@@ -11,6 +11,7 @@ from app.about import *
 from collections import namedtuple
 from app.main_window import *
 
+
 class Libs_test(unittest.TestCase):
     def test_libs_Text_Creator(self):
         example_method = namedtuple("example_method", ['name', 'color'])
