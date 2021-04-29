@@ -37,7 +37,7 @@ jobs:
     - name: Test with pytest
       run: |
         dir
-        xvfb-run python -m tests.test_public.py
+        xvfb-run python -m tests.test_public
     - name: Mypy checks
       run: |
         mypy app
