@@ -1,6 +1,6 @@
 from PyQt5 import uic, QtWidgets, QtGui
 import sys
-from main_window import MainApp
+from main_window import MainApp # type: ignore
 import logging
 
 

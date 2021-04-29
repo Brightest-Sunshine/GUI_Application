@@ -1,10 +1,10 @@
 from PyQt5 import uic, QtWidgets, QtGui
 from PyQt5.QtWidgets import QAction
-from sympy import *
+from sympy import * # type: ignore
 from app.libs import ERRORS, TextCreator
 from app import UI_main_window
 from app import optimization_src
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt # type: ignore
 import numpy as np
 from collections import namedtuple
 import logging
