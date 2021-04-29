@@ -24,7 +24,7 @@ class Libs_test(unittest.TestCase):
 
 class Main_Window_test(unittest.TestCase):
     def setUp(self):
-        self.app = QtWidgets.QApplication(sys.argv)
+        self.app = QtWidgets.QApplication([])
         self.form = MainApp()
 
     def test_default(self):
