@@ -21,3 +21,11 @@ class ERRORS:
     err_to_float = ERROR('ERROR CONVERTING TO FLOAT', 'Please, write float number or scientific notation')
     err_borders = ERROR('ERROR left border bigger than right', 'Please, choose left border lesser than right')
     err_plot = ERROR('ERROR problems during plot creating', 'Unknown error during plot  creation')
+    err_param_run = ERROR('Exception during param function running', 'Error during param running')
+
+
+checkBox_Parameter = namedtuple('checkBox_Parameter', ['name', 'qt_name', 'qt_obj'])
+textEdit_Parameter = namedtuple('textEdit_Parameter', ['name', 'qt_name', 'qt_obj'])
+textBrowser_Parameter = namedtuple('textBrowser_Parameter', ['name', 'qt_name', 'qt_obj'])
+optimization_Parameter = namedtuple('optimization_Parameter',
+                                    ['name', 'qt_name', 'qt_obj', 'function', 'color', 'plot_color'])
