@@ -15,7 +15,7 @@ class Ui_Main(object):
     def setupUi(self, Main):
         Main.setObjectName("Main")
         Main.resize(1178, 842)
-        Main.setStyleSheet("background: url(D:/background.jpg)")
+        #Main.setStyleSheet("background: url(D:/background.jpg)")
         self.centralwidget = QtWidgets.QWidget(Main)
         self.centralwidget.setObjectName("centralwidget")
         self.textEdit = QtWidgets.QTextEdit(self.centralwidget)
