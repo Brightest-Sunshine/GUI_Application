@@ -22,11 +22,11 @@ jobs:
         python-version: 3.8
     - name: Install dependencies
       run: |
-        export QT_DEBUG_PLUGINS=1
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         sudo apt-get install xvfb
         sudo apt-get install libxkbcommon-x11-0
+        sudo apt-get install libxcb-xinerama0
         python -m pip install mypy
     - name: Lint with flake8
       run: |
@@ -36,7 +36,7 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
       run: |
-        QT_QPA_PLATFORM=xcb python -m unittest discover tests
+        QT_DEBUG_PLUGINS=1 QT_QPA_PLATFORM=xcb python -m unittest discover tests
     - name: Mypy checks
       run: |
         mypy app
