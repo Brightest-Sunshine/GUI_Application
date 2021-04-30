@@ -2,7 +2,7 @@ from PyQt5 import uic, QtWidgets, QtGui
 from app import UI_about
 import sys
 
-
+#TODO
 class AboutView(QtWidgets.QWidget, UI_about.Ui_About):
     def __init__(self):
         super().__init__()
