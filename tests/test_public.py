@@ -93,7 +93,7 @@ class Main_Window_test(unittest.TestCase):
         self.form.GOLDEN.qt_obj.click()
         self.form.PLOT.qt_obj.click()
         res = self.form.run_optimization()
-        # self.form.show()
+        self.form.show()
         self.form.clear_all()
         self.assertFalse(self.form.DICHOTOMY.qt_obj.isChecked())
         self.assertTrue(self.form.equation.qt_obj.toPlainText() == "")
