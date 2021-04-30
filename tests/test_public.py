@@ -97,7 +97,7 @@ class Main_Window_test(unittest.TestCase):
         self.form.clear_all()
         self.assertFalse(self.form.DICHOTOMY.qt_obj.isChecked())
         self.assertTrue(self.form.equation.qt_obj.toPlainText() == "")
-        self.assertFalse(self.form.text_answer.qt_obj.toPlainText() == "")
+        self.assertTrue(self.form.text_answer.qt_obj.toPlainText() == "")
 
     def test_run_plot(self):
         equation = "x"
