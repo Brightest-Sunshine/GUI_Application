@@ -6,7 +6,7 @@ from PyQt5 import QtCore
 from PyQt5.QtTest import QTest
 from PyQt5.QtCore import Qt
 from app.main_window import *
-from app.libs import *
+from app.data_structures import *
 from app.about import *
 from collections import namedtuple
 from app.main_window import *
@@ -26,6 +26,7 @@ class Main_Window_test(unittest.TestCase):
     def setUp(self):
         self.app = QtWidgets.QApplication(['--platform offscreen'])
         self.form = MainApp()
+        self.base_eq = "x"
 
     def test_default(self):
         for stuff in self.form.all_textEdit:
@@ -35,25 +36,45 @@ class Main_Window_test(unittest.TestCase):
         for element in self.form.all_hided:
             self.assertFalse(element.qt_obj.isVisible())
 
-    def test_bad_input(self):
+    def test_bad_input_null(self):
         # null
         self.form.equation.qt_obj.setText("")
         self.form.pushButton.click()
         self.assertEqual(self.form.error_label.qt_obj.toPlainText(), ERRORS.err_null.info_to_user)
 
+    def test_bad_input_two_dim(self):
         # not one dim
         self.form.equation.qt_obj.setText("x+y")
         self.form.pushButton.click()
         self.assertEqual(self.form.error_label.qt_obj.toPlainText(), ERRORS.err_var.info_to_user)
 
+    def test_bad_input_bad_sympy(self):
         # bad sympy
         self.form.equation.qt_obj.setText("2x")
         self.form.pushButton.click()
         self.assertEqual(self.form.error_label.qt_obj.toPlainText(), ERRORS.err_sympy.info_to_user)
 
-        # not choose checkbox
+    def test_param_all_clicked(self):  # TODO base eq?
+        self.form.equation.qt_obj.setText(self.base_eq)
+        self.form.DICHOTOMY.qt_obj.click()
+        self.form.GOLDEN.qt_obj.click()
+        self.form.FIBONACCI.qt_obj.click()
+        res = self.form.run_optimization()
+        self.assertEqual(len(res), 3)
 
-    def test_run_optimization_methods(self):
+    def test_param_some_clicked(self):
+        self.form.equation.qt_obj.setText(self.base_eq)
+        self.form.DICHOTOMY.qt_obj.click()
+        self.form.FIBONACCI.qt_obj.click()
+        res = self.form.run_optimization()
+        self.assertEqual(len(res), 2)
+
+    def test_param_no_clicked(self):
+        self.form.equation.qt_obj.setText(self.base_eq)
+        res = self.form.run_optimization()
+        self.assertEqual(len(res), 0)
+
+    def test_run_optimization_methods(self):  # TODO Сделать разными
         equation = "2*x-1"
         answ = 0
         self.form.equation.qt_obj.setText(equation)
@@ -65,12 +86,29 @@ class Main_Window_test(unittest.TestCase):
         self.assertLess(abs(answ - gold[0]), EPS_DEFAULT)
         self.form.clear_all()
 
+    def test_clearing_all(self):
+        equation = "2*x**2 - 3*x +2 "
+        self.form.equation.qt_obj.setText(equation)
+        self.form.DICHOTOMY.qt_obj.click()
+        self.form.GOLDEN.qt_obj.click()
+        self.form.PLOT.qt_obj.click()
+        res = self.form.run_optimization()
+        self.form.show()
+        self.form.clear_all()
+        self.assertFalse(self.form.DICHOTOMY.qt_obj.isChecked())
+        self.assertTrue(self.form.equation.qt_obj.toPlainText() == "")
+        self.assertTrue(self.form.text_answer.qt_obj.toPlainText() =="")
+
     def test_run_plot(self):
         equation = "x"
         self.form.equation.qt_obj.setText(equation)
         self.form.PLOT.qt_obj.click()
         self.form.pushButton.click()
-        self.assertTrue("plot_img.png" in os.listdir())  # TODO Default pic name?
+        self.assertTrue(MainApp.WORKING_PLOT_PATH + MainApp.PLOT_FORMAT in os.listdir())
         self.form.show()
         self.assertTrue(self.form.plot_picture.qt_obj.isVisible())
         self.form.clear_all()
+
+# TODO clearing
+# TODO different borders and eps
+# TODO msg
