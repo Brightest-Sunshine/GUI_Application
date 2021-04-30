@@ -66,6 +66,7 @@ def fibonacci(func, a, b, eps):
 
 
 def _fibonacci(func, a, b, n, k, eps, lambd=float('inf'), mu=float('inf'), prev_f=float('inf')):
+    print(n,k)
     if k <= n - 2:
         if lambd == float('inf'):
             lambd = a + fibonacciSequence(n - k - 1) / fibonacciSequence(n - k + 1) * (b - a)

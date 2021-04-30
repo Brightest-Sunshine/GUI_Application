@@ -155,7 +155,8 @@ class MainApp(QtWidgets.QMainWindow, UI_main_window.Ui_Main, QtWidgets.QMenuBar)
             answer = param.function(working_function, left_border, right_border, eps)
             logging.info(param.name + " result " + str(answer))
             return answer
-        except Exception:
+        except Exception as ex:
+            print(ex)
             logging.error(param.name + "crushed during running")
             self.ERROR_handler(ERRORS.err_param_run)
 
