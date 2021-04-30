@@ -36,7 +36,7 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
       run: |
-        QT_QPA_PLATFORM=offscreen xvfb-run python -m unittest discover tests
+        QT_QPA_PLATFORM=offscreen pytest
     - name: Mypy checks
       run: |
         mypy app
