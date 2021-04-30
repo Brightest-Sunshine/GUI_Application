@@ -58,16 +58,16 @@ class Main_Window_test(unittest.TestCase):
         self.form.equation.qt_obj.setText(self.base_eq)
         self.form.DICHOTOMY.qt_obj.click()
         self.form.GOLDEN.qt_obj.click()
-        # self.form.FIBONACCI.qt_obj.click()
+        self.form.FIBONACCI.qt_obj.click()
         res = self.form.run_optimization()
-        self.assertEqual(len(res), 2)#3
+        self.assertEqual(len(res), 3)#3
 
     def test_param_some_clicked(self):
         self.form.equation.qt_obj.setText(self.base_eq)
         self.form.DICHOTOMY.qt_obj.click()
-        # self.form.FIBONACCI.qt_obj.click()
+        self.form.FIBONACCI.qt_obj.click()
         res = self.form.run_optimization()
-        self.assertEqual(len(res), 1)#2
+        self.assertEqual(len(res), 2)#2
 
     def test_param_no_clicked(self):
         self.form.equation.qt_obj.setText(self.base_eq)
