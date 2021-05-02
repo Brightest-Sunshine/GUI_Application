@@ -71,10 +71,10 @@ class Main_Window_test(unittest.TestCase):
         self.assertEqual(len(res), 2, msg=msg)  # 2
 
     def test_param_no_clicked(self):
-        msg="Return unidentified staff"
+        msg = "Return unidentified staff"
         self.form.equation.qt_obj.setText(self.base_eq)
         res = self.form.run_optimization()
-        self.assertEqual(len(res), 0,msg=msg)
+        self.assertEqual(len(res), 0, msg=msg)
 
     def test_setting_bad_eps(self):
         msg = "Dont show error about bad eps"
@@ -84,7 +84,7 @@ class Main_Window_test(unittest.TestCase):
         self.assertEqual(self.form.error_label.qt_obj.toPlainText(), ERRORS.err_to_float.info_to_user, msg=msg)
 
     def test_setting_eps(self):
-        msg="Answer not close as eps value expected to be"
+        msg = "Answer not close as eps value expected to be"
         self.form.equation.qt_obj.setText(self.quadratic)
         self.form.eps.qt_obj.setText('1e-6')
         eps = 1e-6
@@ -103,16 +103,16 @@ class Main_Window_test(unittest.TestCase):
         res = self.form.run_optimization()
         self.form.show()
         self.form.clear_all()
-        self.assertFalse(self.form.DICHOTOMY.qt_obj.isChecked(),msg=msg)
-        self.assertTrue(self.form.equation.qt_obj.toPlainText() == "",msg=msg)
-        self.assertTrue(self.form.text_answer.qt_obj.toPlainText() == "",msg=msg)
+        self.assertFalse(self.form.DICHOTOMY.qt_obj.isChecked(), msg=msg)
+        self.assertTrue(self.form.equation.qt_obj.toPlainText() == "", msg=msg)
+        self.assertTrue(self.form.text_answer.qt_obj.toPlainText() == "", msg=msg)
 
     def test_run_plot(self):
         msg = "Dont create plot file, so where is nothing to show"
         self.form.equation.qt_obj.setText(self.base_eq)
         self.form.PLOT.qt_obj.click()
         self.form.pushButton.click()
-        self.assertTrue(MainApp.WORKING_PLOT_PATH + MainApp.PLOT_FORMAT in os.listdir(),msg=msg)
+        self.assertTrue(MainApp.WORKING_PLOT_PATH + MainApp.PLOT_FORMAT in os.listdir(), msg=msg)
         self.form.clear_all()
 
     def test_borders(self):
@@ -149,7 +149,7 @@ class OptimizationRunTest(unittest.TestCase):
         self.assertLess(abs(res - self.answer), self.eps, msg=msg)
 
     def test_run_golden(self):
-        msg="golden section dont show expected precision"
+        msg = "golden section dont show expected precision"
         res = optimization_src.goldenSection(self.equation, self.left_border, self.right_border, self.eps)
         self.assertLess(abs(res - self.answer), self.eps, msg=msg)
 
