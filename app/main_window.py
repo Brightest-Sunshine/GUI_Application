@@ -114,7 +114,7 @@ class MainApp(QtWidgets.QMainWindow, UI_main_window.Ui_Main, QtWidgets.QMenuBar)
             logging.warning("No epsilon chosen, running default")
             return EPS_DEFAULT
         else:
-            self.safe_float(self.eps.qt_obj.toPlainText())
+            return self.safe_float(self.eps.qt_obj.toPlainText())
 
     def set_borders(self):
         if self.left_border.qt_obj.toPlainText() == "":
@@ -167,7 +167,7 @@ class MainApp(QtWidgets.QMainWindow, UI_main_window.Ui_Main, QtWidgets.QMenuBar)
         logging.info("expression " + str(expr))
         try:
             working_expr = sympify(expr)
-        except SympifyError:
+        except Exception:
             self.ERROR_handler(ERRORS.err_sympy)
             raise Exception
         variables = working_expr.free_symbols

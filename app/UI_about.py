@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'UI\About.ui'
+# Form implementation generated from reading ui file 'UI/About.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -14,19 +14,24 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_About(object):
     def setupUi(self, About):
         About.setObjectName("About")
-        About.resize(539, 444)
-        self.label = QtWidgets.QLabel(About)
-        self.label.setGeometry(QtCore.QRect(160, 100, 47, 13))
-        self.label.setObjectName("label")
+        About.resize(404, 283)
         self.pushButton = QtWidgets.QPushButton(About)
-        self.pushButton.setGeometry(QtCore.QRect(220, 320, 75, 23))
+        self.pushButton.setGeometry(QtCore.QRect(150, 250, 75, 23))
         self.pushButton.setObjectName("pushButton")
+        self.textBrowser = QtWidgets.QTextBrowser(About)
+        self.textBrowser.setGeometry(QtCore.QRect(10, 10, 381, 241))
+        self.textBrowser.setObjectName("textBrowser")
 
         self.retranslateUi(About)
         QtCore.QMetaObject.connectSlotsByName(About)
 
     def retranslateUi(self, About):
         _translate = QtCore.QCoreApplication.translate
-        About.setWindowTitle(_translate("About", "Form"))
-        self.label.setText(_translate("About", "TextLabel"))
+        About.setWindowTitle(_translate("About", "About"))
         self.pushButton.setText(_translate("About", "OK"))
+        self.textBrowser.setHtml(_translate("About", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Example of sympy expressions:</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">x**2 - 2*x +cos(x)- exp(2)**x - 23 + 93*x + cos(x**2) + sinh(x)</p></body></html>"))

@@ -6,11 +6,10 @@ import logging
 
 def main():
     logging.basicConfig(level=logging.INFO)
-    app = QtWidgets.QApplication(sys.argv)  # Новый экземпляр QApplication
-    window = MainApp()  # Создаём объект класса ExampleApp
-    window.show()  # Показываем окно
-    sys.exit(app.exec_())  # и запускаем приложение
+    app = QtWidgets.QApplication(sys.argv)  # new instance QApplication
+    window = MainApp()
+    window.show()
+    sys.exit(app.exec_())
 
 
 main()
-# TODO english everywhere

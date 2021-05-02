@@ -60,13 +60,12 @@ def fibonacciSequence(n):
 def fibonacci(func, a, b, eps):
     N = (b - a) / eps
     n = 0
-    while fibonacciSequence(n) < N:
+    while fibonacciSequence(n) < N:  # TODO rewrite
         n = n + 1
     return _fibonacci(func, a, b, n, 0, eps)
 
 
 def _fibonacci(func, a, b, n, k, eps, lambd=float('inf'), mu=float('inf'), prev_f=float('inf')):
-    print(n,k)
     if k <= n - 2:
         if lambd == float('inf'):
             lambd = a + fibonacciSequence(n - k - 1) / fibonacciSequence(n - k + 1) * (b - a)
@@ -85,7 +84,6 @@ def _fibonacci(func, a, b, n, k, eps, lambd=float('inf'), mu=float('inf'), prev_
         res = func((a + b) / 2)
         x_min = (a + b) / 2
         return x_min
-
     if f1 > f2:
         prev_f = f2
         if k < n - 2:
