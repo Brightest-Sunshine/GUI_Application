@@ -14,7 +14,6 @@ def dichotomy(func, a, b, eps, counter=0):
             b = x2
         else:
             a = x1
-    res = func((a + b) / 2)
     x_min = (a + b) / 2
     return x_min
 
@@ -24,7 +23,6 @@ def goldenSection(func, a, b, eps):
     x1 = b - (b - a) / phi
     x2 = a + (b - a) / phi
     f_x1, f_x2 = func(x1), func(x2)
-    tau = (sqrt(5) - 1) / 2
     tau = 1 / phi
     eps_n = (b - a) / 2
     while eps_n > eps:

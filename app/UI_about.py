@@ -14,12 +14,12 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_About(object):
     def setupUi(self, About):
         About.setObjectName("About")
-        About.resize(404, 283)
+        About.resize(404, 195)
         self.pushButton = QtWidgets.QPushButton(About)
-        self.pushButton.setGeometry(QtCore.QRect(150, 250, 75, 23))
+        self.pushButton.setGeometry(QtCore.QRect(150, 160, 75, 23))
         self.pushButton.setObjectName("pushButton")
         self.textBrowser = QtWidgets.QTextBrowser(About)
-        self.textBrowser.setGeometry(QtCore.QRect(10, 10, 381, 241))
+        self.textBrowser.setGeometry(QtCore.QRect(10, 10, 391, 131))
         self.textBrowser.setObjectName("textBrowser")
 
         self.retranslateUi(About)
@@ -34,4 +34,8 @@ class Ui_About(object):
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Example of sympy expressions:</p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">x**2 - 2*x +cos(x)- exp(2)**x - 23 + 93*x + cos(x**2) + sinh(x)</p></body></html>"))
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">x**2 - 2*x +cos(x)- exp(2)**x - 23 + 93*x + cos(x**2) + sinh(x)</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">y**2 - sin(y) + 12*exp(y)</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">exp(-t)+exp(t) - t**3</p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Visit our git to find usage of our App:https://github.com/Brightest-Sunshine/GUI_Application</p></body></html>"))
