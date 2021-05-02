@@ -1,8 +1,6 @@
 from math import sqrt
 
 
-# TODO
-
 def dichotomy(func, a, b, eps, counter=0):
     while b - a > eps:
         mean = (a + b) / 2

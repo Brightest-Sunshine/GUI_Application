@@ -1,4 +1,4 @@
-from PyQt5 import uic, QtWidgets, QtGui
+from PyQt5 import QtWidgets
 from app import UI_about
 import sys
 

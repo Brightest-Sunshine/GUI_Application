@@ -1,10 +1,5 @@
 import os
 import unittest
-from PyQt5 import QtCore
-from PyQt5.QtTest import QTest
-from PyQt5.QtCore import Qt
-from app.data_structures import *
-from app.about import *
 from collections import namedtuple
 from app.main_window import *
 from app import optimization_src

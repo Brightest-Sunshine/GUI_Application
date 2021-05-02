@@ -1,4 +1,4 @@
-from PyQt5 import uic, QtWidgets, QtGui
+from PyQt5 import QtWidgets
 import sys
 from app.main_window import MainApp  # type: ignore
 import logging
