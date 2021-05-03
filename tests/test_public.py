@@ -152,8 +152,3 @@ class OptimizationRunTest(unittest.TestCase):
         msg = "golden section dont show expected precision"
         res = optimization_src.goldenSection(self.equation, self.left_border, self.right_border, self.eps)
         self.assertLess(abs(res - self.answer), self.eps, msg=msg)
-
-    def run_fib(self):
-        pass
-
-# TODO README + documentation
