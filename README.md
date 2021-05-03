@@ -19,6 +19,7 @@ To start program write to console from project root
 ```
 ***
 After running this command you will see Main Window of our Application  
+
 ![PIC_1](https://github.com/Brightest-Sunshine/pictures-for-README-files/blob/master/pics/Pic1.png) 
 
 Here you can write yours one-dimensional function, what you need to optimize  
@@ -26,13 +27,16 @@ Because we use in expression recognition sympy, you should write you function in
 
 ![PIC_2](https://github.com/Brightest-Sunshine/pictures-for-README-files/blob/master/pics/Pic2.png)   
 
-After What you can choose left and right border of exploring interval and needed precession  
+After What you can choose left and right border of exploring interval and needed precession 
+
 ![PIC_3](https://github.com/Brightest-Sunshine/pictures-for-README-files/blob/master/pics/Pic3.png)  
 
-After What you can choose parameters you want to be applied to you function during this run.
+After What you can choose parameters you want to be applied to you function during this run
+
 ![PIC_4](https://github.com/Brightest-Sunshine/pictures-for-README-files/blob/master/pics/Pic4.png)  
 
 Now you just need to click solve, and you would get your result  
+
 ![PIC_5](https://github.com/Brightest-Sunshine/pictures-for-README-files/blob/master/pics/Pic5.png)  
 
 # Development team
