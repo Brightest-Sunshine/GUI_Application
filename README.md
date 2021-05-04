@@ -19,16 +19,26 @@ To start program write to console from project root
 ```
 ***
 After running this command you will see Main Window of our Application  
-ФОТОЧКА 1  
+
+![PIC_1](https://github.com/Brightest-Sunshine/pictures-for-README-files/blob/master/pics/Pic1.png) 
+
 Here you can write yours one-dimensional function, what you need to optimize  
 Because we use in expression recognition sympy, you should write you function in his syntax for your function.  
-ФОТОЧКА 2  
-After What you can choose left and right border of exploring interval and needed precession  
-ФОТОЧКА 3  
-After What you can choose parameters you want to be applied to you function during this run.
-Фоточка 4  
+
+![PIC_2](https://github.com/Brightest-Sunshine/pictures-for-README-files/blob/master/pics/Pic2.png)   
+
+After What you can choose left and right border of exploring interval and needed precession 
+
+![PIC_3](https://github.com/Brightest-Sunshine/pictures-for-README-files/blob/master/pics/Pic3.png)  
+
+After What you can choose parameters you want to be applied to you function during this run
+
+![PIC_4](https://github.com/Brightest-Sunshine/pictures-for-README-files/blob/master/pics/Pic4.png)  
+
 Now you just need to click solve, and you would get your result  
-Фоточка 5
+
+![PIC_5](https://github.com/Brightest-Sunshine/pictures-for-README-files/blob/master/pics/Pic5.png)  
+
 # Development team
 1. Mamaeva Anastasia
 
