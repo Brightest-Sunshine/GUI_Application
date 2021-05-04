@@ -158,6 +158,3 @@ class OptimizationRunTest(unittest.TestCase):
         res = optimization_src.goldenSection(self.equation, self.left_border, self.right_border, self.eps)
         self.assertLess(abs(res - self.answer), self.eps, msg=msg)
 
-    def run_fib(self):
-        pass
-
