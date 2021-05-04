@@ -15,13 +15,14 @@ class TextCreator:
 
 
 class ERRORS:
-    err_var = ERROR('NOT_ONE_VARIABLE', 'Please, write one-dimensional function')
-    err_null = ERROR('NO_EXPR', 'Please, write your function')
-    err_sympy = ERROR('ERROR RUNNING SYMPY', 'Error during function recognition, please follow our example')
-    err_to_float = ERROR('ERROR CONVERTING TO FLOAT', 'Please, write float number or scientific notation')
-    err_borders = ERROR('ERROR left border bigger than right', 'Please, choose left border lesser than right')
-    err_plot = ERROR('ERROR problems during plot creating', 'Unknown error during plot  creation')
-    err_param_run = ERROR('Exception during param function running', 'Error during param running')
+    err_var = ERROR('NOT_ONE_VARIABLE', 'Please, write one-dimensional function\n')
+    err_null = ERROR('NO_EXPR', 'Please, write your function\n')
+    err_sympy = ERROR('ERROR RUNNING SYMPY', 'Error during function recognition, please follow our example\n')
+    err_to_float = ERROR('ERROR CONVERTING TO FLOAT', 'Please, write float number or scientific notation\n')
+    err_borders = ERROR('ERROR left border bigger than right', 'Please, choose left border lesser than right\n')
+    err_plot = ERROR('ERROR problems during plot creating', 'Unknown error during plot  creation\n')
+    err_param_run = ERROR('Exception during param function running', 'Error during param running\n')
+    err_optimization_run = ERROR('Exception during optimization run', 'Optimization error caused by following errors:\n')
 
 
 checkBox_Parameter = namedtuple('checkBox_Parameter', ['name', 'qt_name', 'qt_obj'])

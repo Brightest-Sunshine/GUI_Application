@@ -39,19 +39,22 @@ class Main_Window_test(unittest.TestCase):
         msg = "Dont show error about null input"
         self.form.equation.qt_obj.setText("")
         self.form.pushButton.click()
-        self.assertEqual(self.form.error_label.qt_obj.toPlainText(), ERRORS.err_null.info_to_user, msg=msg)
+        self.assertEqual(self.form.error_label.qt_obj.toPlainText(), ERRORS.err_optimization_run.info_to_user +
+                         ERRORS.err_null.info_to_user, msg=msg)
 
     def test_bad_input_two_dim(self):
         msg = "Dont show error about  more than one dim"
         self.form.equation.qt_obj.setText("x+y")
         self.form.pushButton.click()
-        self.assertEqual(self.form.error_label.qt_obj.toPlainText(), ERRORS.err_var.info_to_user, msg=msg)
+        self.assertEqual(self.form.error_label.qt_obj.toPlainText(), ERRORS.err_optimization_run.info_to_user +
+                         ERRORS.err_var.info_to_user, msg=msg)
 
     def test_bad_input_bad_sympy(self):
         msg = "Dont show error about bad sympy syntax"
         self.form.equation.qt_obj.setText("2x")
         self.form.pushButton.click()
-        self.assertEqual(self.form.error_label.qt_obj.toPlainText(), ERRORS.err_sympy.info_to_user, msg=msg)
+        self.assertEqual(self.form.error_label.qt_obj.toPlainText(), ERRORS.err_optimization_run.info_to_user +
+                         ERRORS.err_sympy.info_to_user, msg=msg)
 
     def test_param_all_clicked(self):
         msg = "Dont return all clicked param result"
@@ -81,7 +84,8 @@ class Main_Window_test(unittest.TestCase):
         self.form.equation.qt_obj.setText(self.base_eq)
         self.form.eps.qt_obj.setText('1e--2')
         self.form.run_optimization()
-        self.assertEqual(self.form.error_label.qt_obj.toPlainText(), ERRORS.err_to_float.info_to_user, msg=msg)
+        self.assertEqual(self.form.error_label.qt_obj.toPlainText(), ERRORS.err_optimization_run.info_to_user +
+                         ERRORS.err_to_float.info_to_user, msg=msg)
 
     def test_setting_eps(self):
         msg = "Answer not close as eps value expected to be"
@@ -104,8 +108,8 @@ class Main_Window_test(unittest.TestCase):
         self.form.show()
         self.form.clear_all()
         self.assertFalse(self.form.DICHOTOMY.qt_obj.isChecked(), msg=msg)
-        self.assertTrue(self.form.equation.qt_obj.toPlainText() == "", msg=msg)
-        self.assertTrue(self.form.text_answer.qt_obj.toPlainText() == "", msg=msg)
+        self.assertTrue(self.form.is_empty_text(self.form.equation), msg=msg)
+        self.assertTrue(self.form.is_empty_text(self.form.text_answer), msg=msg)
 
     def test_run_plot(self):
         msg = "Dont create plot file, so where is nothing to show"
@@ -132,7 +136,8 @@ class Main_Window_test(unittest.TestCase):
         self.form.left_border.qt_obj.setText("2")
         self.form.right_border.qt_obj.setText("1")
         self.form.run_optimization()
-        self.assertEqual(self.form.error_label.qt_obj.toPlainText(), ERRORS.err_borders.info_to_user, msg=msg)
+        self.assertEqual(self.form.error_label.qt_obj.toPlainText(), ERRORS.err_optimization_run.info_to_user +
+                         ERRORS.err_borders.info_to_user, msg=msg)
 
 
 class OptimizationRunTest(unittest.TestCase):
@@ -156,4 +161,3 @@ class OptimizationRunTest(unittest.TestCase):
     def run_fib(self):
         pass
 
-# TODO README + documentation

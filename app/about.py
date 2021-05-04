@@ -15,7 +15,7 @@ class AboutView(QtWidgets.QWidget, UI_about.Ui_About):
 
 
 if __name__ == '__main__':
-    app = QtWidgets.QApplication(sys.argv)  # Новый экземпляр QApplication
-    window = AboutView()  # Создаём объект класса ExampleApp
-    window.show()  # Показываем окно
-    sys.exit(app.exec_())  # и
+    app = QtWidgets.QApplication(sys.argv)
+    window = AboutView()
+    window.show()
+    sys.exit(app.exec_())

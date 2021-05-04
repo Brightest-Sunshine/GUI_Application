@@ -8,7 +8,7 @@ Programming language is Python 3.7
 
 To connect all the dependencies, you need to write in the terminal
 ```python
-   pip install -r requirement.txt
+   pip install -r requirements.txt
 ```
 ***
 

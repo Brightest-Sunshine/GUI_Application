@@ -25,10 +25,46 @@ class MainApp(QtWidgets.QMainWindow, UI_main_window.Ui_Main, QtWidgets.QMenuBar)
         self.setupUi(self)
 
         # working buttons
+        self.init_working_buttons()
+
+        # Actions
+        self.init_actions()
+
+        # parameters of optimization
+        self.init_parameters_of_optimization()
+        # objects for plot
+        self.init_plot()
+        # data from user
+        self.init_data_of_optimization()
+        # objects to show results
+        self.init_answer_objects()
+
+        # other objects
+        self.init_error_obj()
+
+        # lists of objects
+        self.init_lists_of_objects()
+
+        # for safe
+        self.hide_all_needed()
+
+    def init_working_buttons(self):
         self.pushButton.clicked.connect(self.run_optimization)
         self.pushButton_2.clicked.connect(self.clear_all)
 
-        # Actions
+    def init_lists_of_objects(self):
+        self.all_checkBox = [self.PLOT, self.GOLDEN, self.DICHOTOMY, self.FIBONACCI]
+        self.all_param = [self.GOLDEN, self.DICHOTOMY, self.FIBONACCI]
+        self.all_textEdit = [self.equation, self.eps, self.left_border, self.right_border]
+        self.all_hided = [self.text_answer, self.plot_picture, self.error_label]
+        self.all_clear_req = [self.equation, self.eps, self.left_border, self.right_border, self.text_answer,
+                              self.plot_picture, self.error_label]
+
+    def init_answer_objects(self):
+        self.text_answer = textBrowser_Parameter("text_answer", "textBrowser_4", self.textBrowser_4)
+        self.plot_picture = textBrowser_Parameter("plot_picture", "label", self.label)
+
+    def init_actions(self):
         aboutAct = QAction('About', self)
         aboutAct.setShortcut('F1')
         aboutAct.setStatusTip('About application')
@@ -36,7 +72,7 @@ class MainApp(QtWidgets.QMainWindow, UI_main_window.Ui_Main, QtWidgets.QMenuBar)
         aboutMenu = self.menubar
         aboutMenu.addAction(aboutAct)
 
-        # parameters of optimization
+    def init_parameters_of_optimization(self):
 
         self.DICHOTOMY = optimization_Parameter("DICHOTOMY", "checkBox_2", self.checkBox_2
                                                 , optimization_src.dichotomy, "red", "ro")
@@ -45,28 +81,18 @@ class MainApp(QtWidgets.QMainWindow, UI_main_window.Ui_Main, QtWidgets.QMenuBar)
         self.FIBONACCI = optimization_Parameter("FIBONACCI", "checkBox_4", self.checkBox_4,
                                                 optimization_src.fibonacci, "cyan", "co")
 
-        # plot
-        self.PLOT = checkBox_Parameter("PLOT", "checkBox", self.checkBox)
-        # data of optimization
+    def init_data_of_optimization(self):
         self.equation = textEdit_Parameter("equation", "textEdit", self.textEdit)
         self.eps = textEdit_Parameter("eps", "textEdit_3", self.textEdit_3)
         self.left_border = textEdit_Parameter("left_border", "textEdit_2", self.textEdit_2)
         self.right_border = textEdit_Parameter("right_border", "textEdit_4", self.textEdit_4)
-        # answer objects
-        self.text_answer = textBrowser_Parameter("text_answer", "textBrowser_4", self.textBrowser_4)
-        self.plot_picture = textBrowser_Parameter("plot_picture", "label", self.label)
 
-        # other objects
+    def init_error_obj(self):
         self.error_label = textBrowser_Parameter("error_label", "textBrowser_5", self.textBrowser_5)
 
-        # lists of objects
-        self.all_checkBox = [self.PLOT, self.GOLDEN, self.DICHOTOMY, self.FIBONACCI]
-        self.all_param = [self.GOLDEN, self.DICHOTOMY, self.FIBONACCI]
-        self.all_textEdit = [self.equation, self.eps, self.left_border, self.right_border]
-        self.all_hided = [self.text_answer, self.plot_picture, self.error_label]
-        self.all_clear_req = [self.equation, self.eps, self.left_border, self.right_border, self.text_answer,
-                              self.plot_picture, self.error_label]
-        self.hide_all_needed()
+    def init_plot(self):
+        # plot
+        self.PLOT = checkBox_Parameter("PLOT", "checkBox", self.checkBox)
 
     def hide_all_needed(self):
         for obj in self.all_hided:
@@ -81,6 +107,9 @@ class MainApp(QtWidgets.QMainWindow, UI_main_window.Ui_Main, QtWidgets.QMenuBar)
             if check_Box.qt_obj.isChecked():
                 check_Box.qt_obj.click()
 
+    def is_empty_text(self, window_elem):
+        return window_elem.qt_obj.toPlainText() == ""
+
     def clear_all(self):
         self.hide_all_needed()
         self.clear_all_obj()
@@ -91,13 +120,14 @@ class MainApp(QtWidgets.QMainWindow, UI_main_window.Ui_Main, QtWidgets.QMenuBar)
 
     def run_optimization(self):
         self.hide_all_needed()
-        expr = self.equation.qt_obj.toPlainText()  # get eq from Application
+        self.error_label.qt_obj.clear()
         try:
-            x, working_function = self.get_var_and_func(expr)
+            x, working_function = self.get_var_and_func()
             eps = self.set_eps()
             left_border, right_border = self.set_borders()
             text_answer, num_answer = self.run_parameters(working_function, left_border, right_border, eps)
         except Exception:
+            self.ERROR_handler(ERRORS.err_optimization_run)
             return 1
         self.print_result(text_answer)
         return num_answer
@@ -110,19 +140,19 @@ class MainApp(QtWidgets.QMainWindow, UI_main_window.Ui_Main, QtWidgets.QMenuBar)
             raise Exception
 
     def set_eps(self):
-        if self.eps.qt_obj.toPlainText() == "":
+        if self.is_empty_text(self.eps):
             logging.warning("No epsilon chosen, running default")
             return EPS_DEFAULT
         else:
             return self.safe_float(self.eps.qt_obj.toPlainText())
 
     def set_borders(self):
-        if self.left_border.qt_obj.toPlainText() == "":
+        if self.is_empty_text(self.left_border):
             left = LEFT_BORDER_DEFAULT
         else:
             left = self.safe_float(self.left_border.qt_obj.toPlainText())
 
-        if self.right_border.qt_obj.toPlainText() == "":
+        if self.is_empty_text(self.right_border):
             right = left + 1
         else:
             right = self.safe_float(self.right_border.qt_obj.toPlainText())
@@ -160,10 +190,11 @@ class MainApp(QtWidgets.QMainWindow, UI_main_window.Ui_Main, QtWidgets.QMenuBar)
             logging.error(param.name + "crushed during running")
             self.ERROR_handler(ERRORS.err_param_run)
 
-    def get_var_and_func(self, expr):  # function to scan incoming expr for var and func
-        if expr == "":
+    def get_var_and_func(self):  # function to scan incoming expr for var and func
+        if self.is_empty_text(self.equation):
             self.ERROR_handler(ERRORS.err_null)
             raise Exception
+        expr = self.equation.qt_obj.toPlainText()
         logging.info("expression " + str(expr))
         try:
             working_expr = sympify(expr)
@@ -202,7 +233,7 @@ class MainApp(QtWidgets.QMainWindow, UI_main_window.Ui_Main, QtWidgets.QMenuBar)
                 plt.plot(res, func(res), method.plot_color)
         plt.savefig(MainApp.WORKING_PLOT_PATH)
         plt.close()
-        image_path = MainApp.WORKING_PLOT_PATH+MainApp.PLOT_FORMAT
+        image_path = MainApp.WORKING_PLOT_PATH + MainApp.PLOT_FORMAT
         label_Image = self.plot_picture.qt_obj
         label_Image.show()
         image_profile = QtGui.QImage(image_path)  # QImage object
@@ -212,6 +243,6 @@ class MainApp(QtWidgets.QMainWindow, UI_main_window.Ui_Main, QtWidgets.QMenuBar)
     def ERROR_handler(self, error):
         LOG, msg = error
         logging.error(LOG)
-        self.textBrowser_5.clear()
-        self.textBrowser_5.setText(msg)
-        self.textBrowser_5.show()
+        already_write = self.error_label.qt_obj.toPlainText()
+        self.error_label.qt_obj.setText(msg + already_write)
+        self.error_label.qt_obj.show()
