@@ -83,7 +83,7 @@ def fibonacci(func, a, b, eps):
 
 
 def _fibonacci(func, a, b, n, k):
-    start_delta = b - a # to use in method run
+    start_delta = b - a  # to use in method run
     x1 = a + fibonacci_sequence(n) / fibonacci_sequence(n + 2) * start_delta
     x2 = a + b - x1
     # a.....x1.....(mean).......x2........b
@@ -102,3 +102,5 @@ def _fibonacci(func, a, b, n, k):
     return x_min
 
 
+def setUp():
+    fibonacci_sequence(30)

@@ -39,22 +39,19 @@ class Main_Window_test(unittest.TestCase):
         msg = "Dont show error about null input"
         self.form.equation.qt_obj.setText("")
         self.form.pushButton.click()
-        self.assertEqual(self.form.error_label.qt_obj.toPlainText(), ERRORS.err_optimization_run.info_to_user +
-                         ERRORS.err_null.info_to_user, msg=msg)
+        self.assertEqual(self.form.error_label.qt_obj.toPlainText(), str(ErrNullException()), msg=msg)
 
     def test_bad_input_two_dim(self):
         msg = "Dont show error about  more than one dim"
         self.form.equation.qt_obj.setText("x+y")
         self.form.pushButton.click()
-        self.assertEqual(self.form.error_label.qt_obj.toPlainText(), ERRORS.err_optimization_run.info_to_user +
-                         ERRORS.err_var.info_to_user, msg=msg)
+        self.assertEqual(self.form.error_label.qt_obj.toPlainText(), str(ErrVarException()), msg=msg)
 
     def test_bad_input_bad_sympy(self):
         msg = "Dont show error about bad sympy syntax"
         self.form.equation.qt_obj.setText("2x")
         self.form.pushButton.click()
-        self.assertEqual(self.form.error_label.qt_obj.toPlainText(), ERRORS.err_optimization_run.info_to_user +
-                         ERRORS.err_sympy.info_to_user, msg=msg)
+        self.assertEqual(self.form.error_label.qt_obj.toPlainText(), str(ErrSympyException()), msg=msg)
 
     def test_param_all_clicked(self):
         msg = "Dont return all clicked param result"
@@ -63,7 +60,7 @@ class Main_Window_test(unittest.TestCase):
         self.form.GOLDEN.qt_obj.click()
         self.form.FIBONACCI.qt_obj.click()
         res = self.form.run_optimization()
-        self.assertEqual(len(res), 3, msg=msg)  # 3
+        self.assertEqual(len(res), 3, msg=msg)
 
     def test_param_some_clicked(self):
         msg = "Dont return all clicked param result"
@@ -71,7 +68,7 @@ class Main_Window_test(unittest.TestCase):
         self.form.DICHOTOMY.qt_obj.click()
         self.form.FIBONACCI.qt_obj.click()
         res = self.form.run_optimization()
-        self.assertEqual(len(res), 2, msg=msg)  # 2
+        self.assertEqual(len(res), 2, msg=msg)
 
     def test_param_no_clicked(self):
         msg = "Return unidentified staff"
@@ -84,8 +81,7 @@ class Main_Window_test(unittest.TestCase):
         self.form.equation.qt_obj.setText(self.base_eq)
         self.form.eps.qt_obj.setText('1e--2')
         self.form.run_optimization()
-        self.assertEqual(self.form.error_label.qt_obj.toPlainText(), ERRORS.err_optimization_run.info_to_user +
-                         ERRORS.err_to_float.info_to_user, msg=msg)
+        self.assertEqual(self.form.error_label.qt_obj.toPlainText(), str(ErrFloatException()), msg=msg)
 
     def test_setting_eps(self):
         msg = "Answer not close as eps value expected to be"
@@ -136,8 +132,8 @@ class Main_Window_test(unittest.TestCase):
         self.form.left_border.qt_obj.setText("2")
         self.form.right_border.qt_obj.setText("1")
         self.form.run_optimization()
-        self.assertEqual(self.form.error_label.qt_obj.toPlainText(), ERRORS.err_optimization_run.info_to_user +
-                         ERRORS.err_borders.info_to_user, msg=msg)
+        self.assertEqual(self.form.error_label.qt_obj.toPlainText(),
+                         str(ErrBordersException()), msg=msg)
 
 
 class OptimizationRunTest(unittest.TestCase):
@@ -155,6 +151,10 @@ class OptimizationRunTest(unittest.TestCase):
 
     def test_run_golden(self):
         msg = "golden section dont show expected precision"
-        res = optimization_src.goldenSection(self.equation, self.left_border, self.right_border, self.eps)
+        res = optimization_src.golden_section(self.equation, self.left_border, self.right_border, self.eps)
         self.assertLess(abs(res - self.answer), self.eps, msg=msg)
 
+    def test_run_fib(self):
+        msg = "fibonacci dont show expected precision"
+        res = optimization_src.fibonacci(self.equation, self.left_border, self.right_border, self.eps)
+        self.assertLess(abs(res - self.answer), self.eps, msg=msg)

@@ -1,8 +1,7 @@
 from PyQt5 import QtWidgets, QtGui
 from PyQt5.QtWidgets import QAction
 from sympy import *  # type: ignore
-from app.data_structures import ERRORS, TextCreator, checkBox_Parameter, textEdit_Parameter, textBrowser_Parameter, \
-    optimization_Parameter
+from app.data_structures import *
 from app import UI_main_window
 from app import optimization_src
 import matplotlib.pyplot as plt  # type: ignore
@@ -77,9 +76,10 @@ class MainApp(QtWidgets.QMainWindow, UI_main_window.Ui_Main, QtWidgets.QMenuBar)
         self.DICHOTOMY = optimization_Parameter("DICHOTOMY", "checkBox_2", self.checkBox_2
                                                 , optimization_src.dichotomy, "red", "ro")
         self.GOLDEN = optimization_Parameter("GOLDEN", "checkBox_3", self.checkBox_3,
-                                             optimization_src.goldenSection, "blue", "bo")
+                                             optimization_src.golden_section, "blue", "bo")
         self.FIBONACCI = optimization_Parameter("FIBONACCI", "checkBox_4", self.checkBox_4,
                                                 optimization_src.fibonacci, "cyan", "co")
+        optimization_src.setUp() # precalculate fibonacci number
 
     def init_data_of_optimization(self):
         self.equation = textEdit_Parameter("equation", "textEdit", self.textEdit)
@@ -126,8 +126,8 @@ class MainApp(QtWidgets.QMainWindow, UI_main_window.Ui_Main, QtWidgets.QMenuBar)
             eps = self.set_eps()
             left_border, right_border = self.set_borders()
             text_answer, num_answer = self.run_parameters(working_function, left_border, right_border, eps)
-        except Exception:
-            self.ERROR_handler(ERRORS.err_optimization_run)
+        except AppException as ex:
+            self.ERROR_handler(ex)
             return 1
         self.print_result(text_answer)
         return num_answer
@@ -136,8 +136,7 @@ class MainApp(QtWidgets.QMainWindow, UI_main_window.Ui_Main, QtWidgets.QMenuBar)
         try:
             return float(line)
         except Exception:
-            self.ERROR_handler(ERRORS.err_to_float)
-            raise Exception
+            raise ErrFloatException
 
     def set_eps(self):
         if self.is_empty_text(self.eps):
@@ -157,8 +156,7 @@ class MainApp(QtWidgets.QMainWindow, UI_main_window.Ui_Main, QtWidgets.QMenuBar)
         else:
             right = self.safe_float(self.right_border.qt_obj.toPlainText())
         if left > right:
-            self.ERROR_handler(ERRORS.err_borders)
-            raise Exception
+            raise ErrBordersException
         return left, right
 
     def run_parameters(self, working_function, left_border, right_border, eps):
@@ -175,9 +173,8 @@ class MainApp(QtWidgets.QMainWindow, UI_main_window.Ui_Main, QtWidgets.QMenuBar)
                 self.function_plot(working_function, left_border, right_border, num_answer)
                 logging.info("plot created")
             except Exception:
-                self.ERROR_handler(ERRORS.err_plot)
                 self.plot_picture.qt_obj.hide()
-                raise Exception
+                raise ErrPlotException
         return text_answer, num_answer
 
     def run_parameter(self, param, working_function, left_border, right_border, eps):
@@ -185,26 +182,22 @@ class MainApp(QtWidgets.QMainWindow, UI_main_window.Ui_Main, QtWidgets.QMenuBar)
             answer = param.function(working_function, left_border, right_border, eps)
             logging.info(param.name + " result " + str(answer))
             return answer
-        except Exception as ex:
-            print(ex)
+        except Exception:
             logging.error(param.name + "crushed during running")
-            self.ERROR_handler(ERRORS.err_param_run)
+            raise ErrParamException
 
     def get_var_and_func(self):  # function to scan incoming expr for var and func
         if self.is_empty_text(self.equation):
-            self.ERROR_handler(ERRORS.err_null)
-            raise Exception
+            raise ErrNullException
         expr = self.equation.qt_obj.toPlainText()
         logging.info("expression " + str(expr))
         try:
             working_expr = sympify(expr)
         except Exception:
-            self.ERROR_handler(ERRORS.err_sympy)
-            raise Exception
+            raise ErrSympyException
         variables = working_expr.free_symbols
         if len(variables) > 1:
-            self.ERROR_handler(ERRORS.err_var)
-            raise Exception
+            raise ErrVarException
         x = variables.pop()  # get our variable
         logging.info("var " + str(x))
         working_function = lambda x_value: working_expr.subs(x, x_value)  # create standard function
@@ -240,9 +233,9 @@ class MainApp(QtWidgets.QMainWindow, UI_main_window.Ui_Main, QtWidgets.QMenuBar)
         image_profile = image_profile.scaled(label_Image.width(), label_Image.height())
         label_Image.setPixmap(QtGui.QPixmap.fromImage(image_profile))
 
-    def ERROR_handler(self, error):
-        LOG, msg = error
+    def ERROR_handler(self, errException):
+        LOG = errException.to_log()
+        msg = str(errException)
         logging.error(LOG)
-        already_write = self.error_label.qt_obj.toPlainText()
-        self.error_label.qt_obj.setText(msg + already_write)
+        self.error_label.qt_obj.setText(msg)
         self.error_label.qt_obj.show()
